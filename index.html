@@ -84,34 +84,9 @@
             transform: translate(-42%, -48%);
             z-index: 2;
         }
-
-        .inapp-banner {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: #18181b;
-            border-bottom: 1px solid #27272a;
-            z-index: 99999;
-            padding: 12px 16px;
-            text-align: center;
-            font-size: 14px;
-        }
     </style>
 </head>
 <body class="bg-zinc-950 text-white">
-
-<!-- Banner para detectar navegador de Instagram/Facebook -->
-<div id="inapp-banner" class="inapp-banner">
-    <div class="flex items-center justify-center gap-3 text-sm">
-        <span>Para mejor experiencia, abre en tu navegador</span>
-        <button onclick="window.open(window.location.href, '_blank'); document.getElementById('inapp-banner').style.display='none';" 
-                class="px-4 py-1 bg-white text-zinc-950 text-xs font-semibold rounded-2xl">
-            Abrir en navegador
-        </button>
-    </div>
-</div>
 
 <canvas id="particles-canvas"></canvas>
 
@@ -267,16 +242,40 @@
 </div>
 
 <script>
-// Detectar si se abre dentro de Instagram o Facebook
+// === SISTEMA TAPMYSOCIALS STYLE - FORZAR NAVEGADOR EXTERNO ===
 (function() {
-    const ua = navigator.userAgent;
-    const isInApp = ua.includes('Instagram') || ua.includes('FBAN') || ua.includes('FBAV') || ua.includes('FB_IAB');
+    const ua = navigator.userAgent.toLowerCase();
+    const isInstagram = ua.includes('instagram');
+    const isFacebook = ua.includes('fban') || ua.includes('fbav') || ua.includes('fb_iab');
     
-    if (isInApp) {
-        const banner = document.getElementById('inapp-banner');
-        if (banner) {
-            banner.style.display = 'block';
-        }
+    if (isInstagram || isFacebook) {
+        // Detectado navegador interno de Instagram/Facebook
+        // Forzar apertura en navegador externo (esto activa el popup nativo de Instagram)
+        setTimeout(function() {
+            const currentUrl = window.location.href;
+            
+            // Intentar abrir en nueva pestaña (esto activa el diálogo nativo)
+            const newTab = window.open(currentUrl, '_blank');
+            
+            if (newTab) {
+                // Si se abrió, cerrar la pestaña actual después de un momento
+                setTimeout(function() {
+                    window.close();
+                }, 800);
+            } else {
+                // Si el navegador bloqueó el popup, mostrar instrucción
+                const banner = document.createElement('div');
+                banner.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#18181b;border:1px solid #27272a;color:white;padding:12px 20px;border-radius:9999px;font-size:13px;z-index:99999;display:flex;align-items:center;gap:12px;box-shadow:0 10px 30px rgba(0,0,0,0.3)';
+                banner.innerHTML = `
+                    <span>Abre en tu navegador para mejor experiencia</span>
+                    <button onclick="window.open('${currentUrl}', '_blank'); this.parentElement.remove();" 
+                            style="background:white;color:#18181b;border:none;padding:6px 14px;border-radius:9999px;font-size:12px;font-weight:600;cursor:pointer">
+                        Abrir
+                    </button>
+                `;
+                document.body.appendChild(banner);
+            }
+        }, 600);
     }
 })();
 
