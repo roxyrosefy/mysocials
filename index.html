@@ -80,75 +80,6 @@
             width: 100%;
         }
 
-        .masonry-grid {
-            column-count: 2;
-            column-gap: 1rem;
-        }
-        
-        @media (min-width: 768px) {
-            .masonry-grid {
-                column-count: 3;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .masonry-grid {
-                column-count: 4;
-            }
-        }
-
-        .gallery-item {
-            break-inside: avoid;
-            margin-bottom: 1rem;
-            position: relative;
-            overflow: hidden;
-            border-radius: 16px;
-        }
-
-        .service-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-        }
-
-        .social-btn {
-            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-        }
-        
-        .social-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 10px 15px -3px rgb(183 110 121 / 0.3);
-        }
-
-        .modal {
-            animation: fadeInScale 0.3s ease forwards;
-        }
-
-        @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .rose-petal {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background: #b76e79;
-            border-radius: 50% 0 50% 50%;
-            animation: fall linear forwards;
-            opacity: 0.6;
-            z-index: 1;
-        }
-
         .luxury-shadow {
             box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
         }
@@ -213,20 +144,21 @@
 
     <!-- HERO -->
     <header class="relative h-screen flex items-center justify-center pt-20 overflow-hidden">
-        <!-- Background Image -->
-        <div class="absolute inset-0 bg-cover bg-center" 
-             style="background-image: url('https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/grok_image_1780159867735.jpg')">
-            <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80"></div>
-            <div class="absolute inset-0 bg-[radial-gradient(#b76e79_0.8px,transparent_1px)] bg-[length:4px_4px] opacity-20"></div>
-        </div>
+        <!-- Background Video Loop (sube tu video como: assets/images/roxyrose-hero.mp4) -->
+        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover z-0">
+            <source src="https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/roxyrose-hero.mp4" type="video/mp4">
+            <!-- Fallback si no carga el video -->
+            <img src="https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/grok_image_1780159867735.jpg" class="absolute inset-0 w-full h-full object-cover">
+        </video>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/45 to-black/70 z-10"></div>
         
         <!-- Floating rose petals -->
-        <div id="petals-container" class="absolute inset-0 pointer-events-none"></div>
+        <div id="petals-container" class="absolute inset-0 pointer-events-none z-10"></div>
 
-        <div class="relative z-10 max-w-4xl px-6 text-center">
+        <div class="relative z-20 max-w-4xl px-6 text-center">
             <div class="inline-flex items-center gap-x-2 px-4 py-1.5 rounded-3xl bg-white/10 backdrop-blur-md mb-6 border border-white/20">
                 <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                <span class="text-sm font-medium tracking-widest">MODELO • INFLUENCER</span>
+                <span class="text-sm font-medium tracking-widest">AHORA DISPONIBLE PARA COLABORACIONES</span>
             </div>
             
             <h1 class="text-6xl md:text-7xl font-bold tracking-tighter heading-serif mb-4">
@@ -268,7 +200,7 @@
             </div>
         </div>
         
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center">
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center z-20">
             <span class="text-[10px] tracking-[2px] mb-1.5 text-zinc-400">SCROLL PARA DESCUBRIR</span>
             <i class="fa-solid fa-chevron-down text-xl animate-bounce text-rose-400"></i>
         </div>
@@ -308,28 +240,46 @@
         </div>
     </section>
 
-    <!-- GALERÍA -->
-    <section id="galeria" class="max-w-7xl mx-auto px-6 py-20">
-        <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-10">
-            <div>
-                <span class="text-rose-400 text-sm font-semibold tracking-[1.5px]">PORTAFOLIO VISUAL</span>
-                <h2 class="text-5xl font-bold heading-serif">Mi mundo en imágenes</h2>
-            </div>
-            
-            <div class="flex gap-2 mt-6 md:mt-0">
-                <button onclick="filterGallery('all')" class="active-filter px-5 py-2 text-sm font-medium rounded-3xl bg-white text-zinc-950" id="filter-all">Todas</button>
-                <button onclick="filterGallery('photo')" class="px-5 py-2 text-sm font-medium rounded-3xl border border-white/20 hover:bg-white/5" id="filter-photo">Fotos</button>
-                <button onclick="filterGallery('video')" class="px-5 py-2 text-sm font-medium rounded-3xl border border-white/20 hover:bg-white/5" id="filter-video">Videos</button>
+    <!-- GALERÍA - Carrusel Vidrioso Auto-Play -->
+    <section id="galeria" class="max-w-6xl mx-auto px-6 py-20">
+        <div class="text-center mb-12">
+            <span class="text-rose-400 text-sm font-semibold tracking-[1.5px]">PORTAFOLIO VISUAL</span>
+            <h2 class="text-5xl font-bold heading-serif mt-2">Mi mundo en imágenes</h2>
+            <p class="mt-3 text-zinc-400 max-w-md mx-auto">Desliza o deja que se reproduzca solo. Toca para ver en grande.</p>
+        </div>
+        
+        <!-- Carrusel -->
+        <div class="relative max-w-[1100px] mx-auto">
+            <div id="carousel-container" 
+                 class="relative h-[520px] md:h-[620px] overflow-hidden rounded-3xl shadow-2xl border border-white/10"
+                 onmouseenter="pauseCarousel()" 
+                 onmouseleave="resumeCarousel()">
+                
+                <!-- Slides populated by JS -->
+                <div id="carousel-slides" class="flex h-full transition-transform duration-700 ease-out">
+                    <!-- JS inserts images here -->
+                </div>
+                
+                <!-- Glass overlay -->
+                <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40 pointer-events-none"></div>
+                
+                <!-- Navigation arrows -->
+                <button onclick="prevSlide()" 
+                        class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/60 hover:bg-black/80 backdrop-blur-md rounded-2xl flex items-center justify-center text-white transition z-20">
+                    <i class="fa-solid fa-chevron-left text-xl"></i>
+                </button>
+                <button onclick="nextSlide()" 
+                        class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/60 hover:bg-black/80 backdrop-blur-md rounded-2xl flex items-center justify-center text-white transition z-20">
+                    <i class="fa-solid fa-chevron-right text-xl"></i>
+                </button>
+                
+                <!-- Dots -->
+                <div id="carousel-dots" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20"></div>
             </div>
         </div>
         
-        <!-- Masonry Gallery -->
-        <div class="masonry-grid" id="gallery-grid">
-            <!-- Populated by JS -->
-        </div>
-        
-        <div class="text-center mt-10">
-            <p class="text-xs text-zinc-500">Fotos exclusivas de Roxyrose • 2026</p>
+        <div class="text-center mt-8">
+            <p class="text-xs text-zinc-500">Fotos exclusivas de Roxyrose • 2026 • Desliza o haz clic para ampliar</p>
         </div>
     </section>
 
@@ -580,111 +530,96 @@
             });
         }
         
-        // Gallery data - Real photos of Roxyrose (new uploads)
+        // Gallery data - Real photos of Roxyrose (clean, no captions on cards)
         const galleryItems = [
-            { id: 1, type: 'photo', src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/grok_image_1780159867735.jpg', caption: 'Roxyrose • Cabello rosa brillante', category: 'Portrait' },
-            { id: 2, type: 'photo', src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/Face_and_hair_reference_replace,_202605291816.jpeg', caption: 'Close-up • Rostro perfecto', category: 'Portrait' },
-            { id: 3, type: 'photo', src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/IMG_20260528_044159.jpg', caption: 'Mirada intensa • Ojos azules', category: 'Portrait' },
-            { id: 4, type: 'photo', src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/IMG_20260528_044147.jpg', caption: 'Sonrisa juguetona', category: 'Casual' },
-            { id: 5, type: 'photo', src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/IMG_20260528_044112.jpg', caption: 'Pose elegante • Cuerpo curvilíneo', category: 'Fashion' },
-            { id: 6, type: 'photo', src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/IMG_20260528_044124.jpg', caption: 'Selfie sexy • Labios rosados', category: 'Glam' },
-            { id: 7, type: 'photo', src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/IMG_20260528_044056.jpg', caption: 'Estilo natural • Día soleado', category: 'Lifestyle' },
-            { id: 8, type: 'photo', src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/Face_and_hair_reference_replace,_202605271817.jpeg', caption: 'Rostro angelical • Pecas', category: 'Portrait' },
-            { id: 9, type: 'photo', src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/Face_and_hair_reference_replace,_202605271813.jpeg', caption: 'Mirada seductora', category: 'Glam' },
-            { id: 10, type: 'photo', src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/Face_and_hair_reference_replace,_202605271742.jpeg', caption: 'Belleza natural • Cabello suelto', category: 'Casual' },
+            { id: 1, src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/grok_image_1780159867735.jpg' },
+            { id: 2, src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/Face_and_hair_reference_replace,_202605291816.jpeg' },
+            { id: 3, src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/IMG_20260528_044159.jpg' },
+            { id: 4, src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/IMG_20260528_044147.jpg' },
+            { id: 5, src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/IMG_20260528_044112.jpg' },
+            { id: 6, src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/IMG_20260528_044124.jpg' },
+            { id: 7, src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/IMG_20260528_044056.jpg' },
+            { id: 8, src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/Face_and_hair_reference_replace,_202605271817.jpeg' },
+            { id: 9, src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/Face_and_hair_reference_replace,_202605271813.jpeg' },
+            { id: 10, src: 'https://raw.githubusercontent.com/andresjose21/roxyrose/main/assets/images/Face_and_hair_reference_replace,_202605271742.jpeg' },
         ];
         
-        let currentFilter = 'all';
-        
-        function renderGallery(filter = 'all') {
-            const grid = document.getElementById('gallery-grid');
-            grid.innerHTML = '';
+        // === CARRUSEL VIDRIOSO AUTO-PLAY (sin texto en las fotos) ===
+        let currentSlide = 0;
+        let carouselInterval = null;
+        let isPaused = false;
+
+        function initCarousel() {
+            const container = document.getElementById('carousel-slides');
+            const dotsContainer = document.getElementById('carousel-dots');
+            if (!container) return;
             
-            let filtered = galleryItems;
-            if (filter !== 'all') {
-                filtered = galleryItems.filter(item => item.type === filter);
-            }
+            container.innerHTML = '';
+            dotsContainer.innerHTML = '';
+
+            galleryItems.forEach((item, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'min-w-full h-full flex-shrink-0 relative';
+                slide.innerHTML = `
+                    <img src="${item.src}" 
+                         class="w-full h-full object-cover cursor-pointer"
+                         style="filter: saturate(1.1) contrast(1.05);"
+                         onclick="openLightbox('${item.src}', 'Roxyrose')">
+                    
+                    <!-- Efecto vidrioso / glassmorphism -->
+                    <div class="absolute inset-0 bg-white/5 backdrop-blur-[1.5px] pointer-events-none"></div>
+                `;
+                container.appendChild(slide);
+
+                const dot = document.createElement('button');
+                dot.className = `w-2.5 h-2.5 rounded-full transition-all ${index === 0 ? 'bg-white scale-125' : 'bg-white/40'}`;
+                dot.onclick = () => goToSlide(index);
+                dotsContainer.appendChild(dot);
+            });
+
+            startCarousel();
+        }
+
+        function startCarousel() {
+            if (carouselInterval) clearInterval(carouselInterval);
+            carouselInterval = setInterval(() => {
+                if (!isPaused) nextSlide();
+            }, 3800);
+        }
+
+        function pauseCarousel() { isPaused = true; }
+        function resumeCarousel() { isPaused = false; }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % galleryItems.length;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + galleryItems.length) % galleryItems.length;
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            const container = document.getElementById('carousel-slides');
+            const dots = document.querySelectorAll('#carousel-dots button');
+            if (!container) return;
             
-            filtered.forEach(item => {
-                const div = document.createElement('div');
-                div.className = `gallery-item group cursor-pointer ${item.type === 'video' ? 'video-item' : ''}`;
-                div.dataset.type = item.type;
-                div.dataset.id = item.id;
-                
-                if (item.type === 'photo') {
-                    div.innerHTML = `
-                        <div class="relative overflow-hidden rounded-3xl shadow-xl">
-                            <img src="${item.src}" class="gallery-img w-full aspect-[4/5] object-cover" alt="${item.caption}">
-                            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/70 opacity-0 group-hover:opacity-100 transition-all"></div>
-                            
-                            <div class="absolute bottom-0 left-0 right-0 p-5 text-white translate-y-2 group-hover:translate-y-0 transition-all">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <div class="font-semibold text-sm">${item.caption}</div>
-                                        <div class="text-[10px] text-white/70">${item.category}</div>
-                                    </div>
-                                    <div class="w-9 h-9 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                                        <i class="fa-solid fa-search-plus text-sm"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    // Video card
-                    div.innerHTML = `
-                        <div class="relative overflow-hidden rounded-3xl shadow-xl bg-zinc-900">
-                            <img src="${item.poster}" class="gallery-img w-full aspect-[4/5] object-cover" alt="${item.caption}">
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="w-16 h-16 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition">
-                                    <i class="fa-solid fa-play text-rose-600 ml-1 text-3xl"></i>
-                                </div>
-                            </div>
-                            <div class="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black to-transparent">
-                                <div class="flex items-center gap-x-2">
-                                    <div class="px-3 py-px text-[10px] bg-rose-500 text-white rounded">VIDEO</div>
-                                    <div class="font-semibold text-sm">${item.caption}</div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }
-                
-                // Click handlers
-                div.addEventListener('click', () => {
-                    if (item.type === 'photo') {
-                        openLightbox(item.src, item.caption);
-                    } else {
-                        openVideoModal(item);
-                    }
-                });
-                
-                grid.appendChild(div);
+            container.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('bg-white', i === currentSlide);
+                dot.classList.toggle('scale-125', i === currentSlide);
+                dot.classList.toggle('bg-white/40', i !== currentSlide);
             });
         }
-        
-        function filterGallery(type) {
-            currentFilter = type;
-            
-            // Update active button styles
-            document.querySelectorAll('[id^="filter-"]').forEach(btn => {
-                btn.classList.remove('bg-white', 'text-zinc-950');
-                btn.classList.add('border', 'border-white/20', 'hover:bg-white/5');
-                
-                if ((type === 'all' && btn.id === 'filter-all') || 
-                    (type === 'photo' && btn.id === 'filter-photo') || 
-                    (type === 'video' && btn.id === 'filter-video')) {
-                    btn.classList.add('bg-white', 'text-zinc-950');
-                    btn.classList.remove('border', 'border-white/20', 'hover:bg-white/5');
-                }
-            });
-            
-            renderGallery(type);
-        }
-        
-        let lightboxOpen = false;
-        
-        function openLightbox(src, caption) {
+
+        function openLightbox(src, caption = '') {
             const lightbox = document.getElementById('lightbox');
             const img = document.getElementById('lightbox-image');
             const cap = document.getElementById('lightbox-caption');
@@ -693,9 +628,7 @@
             cap.textContent = caption;
             lightbox.classList.remove('hidden');
             lightbox.classList.add('flex');
-            lightboxOpen = true;
             
-            // Close on ESC
             document.addEventListener('keydown', function handler(e) {
                 if (e.key === 'Escape') {
                     closeLightbox();
@@ -703,44 +636,11 @@
                 }
             }, { once: true });
         }
-        
+
         function closeLightbox() {
             const lightbox = document.getElementById('lightbox');
             lightbox.classList.remove('flex');
             lightbox.classList.add('hidden');
-            lightboxOpen = false;
-        }
-        
-        function openVideoModal(item) {
-            const modal = document.createElement('div');
-            modal.className = 'fixed inset-0 bg-black/95 z-[110] flex items-center justify-center p-4';
-            modal.innerHTML = `
-                <div class="max-w-4xl w-full relative">
-                    <button class="absolute -top-14 right-2 text-white text-5xl hover:text-rose-400 transition" onclick="this.closest('.fixed').remove()">&times;</button>
-                    
-                    <div class="bg-zinc-950 rounded-3xl overflow-hidden shadow-2xl border border-white/10">
-                        <video controls autoplay class="w-full max-h-[70vh] bg-black" poster="${item.poster}">
-                            <source src="${item.src}" type="application/x-mpegURL">
-                            Tu navegador no soporta video HTML5.
-                        </video>
-                        
-                        <div class="p-6 flex items-center justify-between border-t border-white/10">
-                            <div>
-                                <div class="font-semibold">${item.caption}</div>
-                                <div class="text-xs text-zinc-500">Roxyrose • 2026</div>
-                            </div>
-                            <button onclick="this.closest('.fixed').remove()" 
-                                    class="px-6 py-2 text-sm border border-white/30 rounded-3xl hover:bg-white/5">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(modal);
-            
-            // Close on outside click
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.remove();
-            });
         }
         
         function handleContactSubmit(e) {
@@ -849,7 +749,7 @@
         function initializeSite() {
             initializeTailwind();
             initMobileMenu();
-            renderGallery('all');
+            initCarousel();
             createRosePetals();
             initKeyboard();
             
@@ -900,12 +800,6 @@
         
         // Boot everything
         window.onload = initializeSite;
-        
-        // Bonus: Make filter buttons nicer on load
-        setTimeout(() => {
-            const allBtn = document.getElementById('filter-all');
-            if (allBtn) allBtn.classList.add('bg-white', 'text-zinc-950');
-        }, 300);
     </script>
 </body>
 </html>
