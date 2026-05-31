@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://roxyrosefy.github.io/mysocials/sitemap.xml
