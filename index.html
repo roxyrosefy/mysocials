@@ -99,6 +99,17 @@
             outline: none;
             border-color: #f43f5e;
         }
+
+        .success-message {
+            display: none;
+            background: #052e16;
+            border: 1px solid #166534;
+            color: #4ade80;
+            padding: 16px;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body class="bg-zinc-950 text-white">
@@ -225,12 +236,27 @@
         <span class="text-rose-400 text-sm font-semibold tracking-[1.5px]" data-i18n="contact.tag">LET'S TALK</span>
         <h2 class="text-4xl md:text-5xl font-bold heading-serif mt-2" data-i18n="contact.title">Ready to create something incredible?</h2>
     </div>
-    <form onsubmit="event.preventDefault(); alert('Message sent! I will reply soon 💌'); this.reset();" class="space-y-5">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <input type="text" placeholder="Your name" class="w-full bg-zinc-900 border border-white/20 rounded-2xl px-5 py-3.5 focus:outline-none focus:border-rose-400" data-i18n-placeholder="form.name">
-            <input type="email" placeholder="Your email" class="w-full bg-zinc-900 border border-white/20 rounded-2xl px-5 py-3.5 focus:outline-none focus:border-rose-400" data-i18n-placeholder="form.email">
+    
+    <!-- SUCCESS MESSAGE -->
+    <div id="success-message" class="success-message max-w-3xl mx-auto mb-6">
+        <div class="flex items-center justify-center gap-3">
+            <i class="fa-solid fa-check-circle text-2xl"></i>
+            <span class="font-medium" data-i18n="form.success">Thank you! Your message has been sent successfully. I will reply soon.</span>
         </div>
-        <textarea placeholder="Tell me more..." rows="5" class="w-full bg-zinc-900 border border-white/20 rounded-3xl px-5 py-4 focus:outline-none focus:border-rose-400 resize-y" data-i18n-placeholder="form.message"></textarea>
+    </div>
+
+    <form action="https://formsubmit.co/pinkroxyrose@gmail.com" method="POST" id="contact-form" class="space-y-5">
+        <!-- FormSubmit configuration -->
+        <input type="hidden" name="_subject" value="New message from Roxyrose website">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <input type="text" name="name" placeholder="Your name" required class="w-full bg-zinc-900 border border-white/20 rounded-2xl px-5 py-3.5 focus:outline-none focus:border-rose-400" data-i18n-placeholder="form.name">
+            <input type="email" name="email" placeholder="Your email" required class="w-full bg-zinc-900 border border-white/20 rounded-2xl px-5 py-3.5 focus:outline-none focus:border-rose-400" data-i18n-placeholder="form.email">
+        </div>
+        <textarea name="message" placeholder="Tell me more..." rows="5" required class="w-full bg-zinc-900 border border-white/20 rounded-3xl px-5 py-4 focus:outline-none focus:border-rose-400 resize-y" data-i18n-placeholder="form.message"></textarea>
+        
         <button type="submit" class="w-full py-4 bg-gradient-to-r from-rose-500 to-pink-600 font-semibold text-lg rounded-3xl hover:brightness-110 transition" data-i18n="form.submit">
             Send message
         </button>
@@ -294,6 +320,7 @@ const translations = {
         "form.email": "Your email",
         "form.message": "Tell me more...",
         "form.submit": "Send message",
+        "form.success": "Thank you! Your message has been sent successfully. I will reply soon.",
         "footer.copyright": "© 2026 Roxyrose • All rights reserved",
         "footer.privacy": "Privacy Policy",
         "footer.terms": "Terms and Conditions",
@@ -327,6 +354,7 @@ const translations = {
         "form.email": "Tu email",
         "form.message": "Cuéntame más...",
         "form.submit": "Enviar mensaje",
+        "form.success": "¡Gracias! Tu mensaje ha sido enviado exitosamente. Te responderé pronto.",
         "footer.copyright": "© 2026 Roxyrose • Todos los derechos reservados",
         "footer.privacy": "Política de Privacidad",
         "footer.terms": "Términos y Condiciones",
@@ -360,6 +388,7 @@ const translations = {
         "form.email": "La tua email",
         "form.message": "Dimmi di più...",
         "form.submit": "Invia messaggio",
+        "form.success": "Grazie! Il tuo messaggio è stato inviato con successo. Ti risponderò presto.",
         "footer.copyright": "© 2026 Roxyrose • Tutti i diritti riservati",
         "footer.privacy": "Informativa sulla Privacy",
         "footer.terms": "Termini e Condizioni",
@@ -393,6 +422,7 @@ const translations = {
         "form.email": "Ваш email",
         "form.message": "Расскажите больше...",
         "form.submit": "Отправить сообщение",
+        "form.success": "Спасибо! Ваше сообщение успешно отправлено. Я отвечу в ближайшее время.",
         "footer.copyright": "© 2026 Roxyrose • Все права защищены",
         "footer.privacy": "Политика конфиденциальности",
         "footer.terms": "Условия и положения",
@@ -426,6 +456,7 @@ const translations = {
         "form.email": "你的邮箱",
         "form.message": "告诉我更多...",
         "form.submit": "发送消息",
+        "form.success": "谢谢！您的消息已成功发送。我会尽快回复。",
         "footer.copyright": "© 2026 Roxyrose • 版权所有",
         "footer.privacy": "隐私政策",
         "footer.terms": "条款和条件",
@@ -459,6 +490,7 @@ const translations = {
         "form.email": "Seu email",
         "form.message": "Me conte mais...",
         "form.submit": "Enviar mensagem",
+        "form.success": "Obrigado! Sua mensagem foi enviada com sucesso. Eu responderei em breve.",
         "footer.copyright": "© 2026 Roxyrose • Todos os direitos reservados",
         "footer.privacy": "Política de Privacidade",
         "footer.terms": "Termos e Condições",
@@ -468,7 +500,6 @@ const translations = {
 
 // Apply translations
 function applyTranslations(lang) {
-    // Update all elements with data-i18n
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[lang] && translations[lang][key]) {
@@ -476,7 +507,6 @@ function applyTranslations(lang) {
         }
     });
     
-    // Update placeholders
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
         const key = el.getAttribute('data-i18n-placeholder');
         if (translations[lang] && translations[lang][key]) {
@@ -484,25 +514,41 @@ function applyTranslations(lang) {
         }
     });
     
-    // Save preference
     localStorage.setItem('preferredLang', lang);
 }
 
 // Language switcher
- document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     const select = document.getElementById('lang-select');
-    
-    // Load saved language or default to English
     const savedLang = localStorage.getItem('preferredLang') || 'en';
     select.value = savedLang;
-    
-    // Apply initial translations
     applyTranslations(savedLang);
     
-    // Listen for changes
     select.addEventListener('change', function() {
         applyTranslations(this.value);
     });
+    
+    // Form handling for success message
+    const form = document.getElementById('contact-form');
+    const successMsg = document.getElementById('success-message');
+    
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            // Let FormSubmit handle the submission
+            // Show success message after a short delay (FormSubmit will process in background)
+            setTimeout(() => {
+                if (successMsg) {
+                    successMsg.style.display = 'block';
+                    form.reset();
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        successMsg.style.display = 'none';
+                    }, 5000);
+                }
+            }, 800);
+        });
+    }
 });
 
 // PARTÍCULAS
